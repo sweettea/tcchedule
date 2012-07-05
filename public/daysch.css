@@ -1,0 +1,74 @@
+
+.emnum{
+	float:left;
+	width:50%;
+	border-width:1px;
+}
+.lecnum{
+	float:left;
+	width:50%;
+	border-width:1px;
+}
+.timecol{
+	float:left;
+	width:150px;
+}
+.timename{
+	float:left;
+	text-align:center;
+	width:100%;
+}
+
+.day:nth-child(odd) .dayname{
+	border-bottom: 2px solid #888;
+}
+.day:nth-child(even) .dayname{
+	border-bottom: 2px solid #ddd;
+}
+	
+.spacer{
+	clear:both;
+}
+.day{
+	float:left;
+}
+.times{
+	width:100%;
+}
+.timecol:nth-child(odd) .timename{
+	border-bottom:2px solid #000;
+	padding-bottom:3px;
+}
+.timecol:nth-child(even) .timename{
+	border-bottom:5px solid #000;
+}
+.dayname{
+	text-align:center;
+	width:100%;
+}
+#days{
+	width:100%;
+}
+#schedlink{
+	visible:hidden;
+}
+#newday{
+	padding-left: 20px;
+}
+#right{
+	float:right;
+}
+#savesched{
+	width: 200px;
+	padding-bottom: 20px;
+	padding-top:20px;
+	border-color: #f00;
+	border-width:2px;
+	border-style:solid;
+}
+#loadsched{
+	width: 200px;
+}
+.existsched:nth-child(even){
+	background-color:#eee;
+}

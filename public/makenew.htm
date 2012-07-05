@@ -1,0 +1,195 @@
+<html>
+<head>
+<title>
+Make New Schedule
+</title>
+<!-- 
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?3.5.1/build/widget-base/assets/skins/sam/widget-base.css&3.5.1/build/resize-base/assets/skins/sam/resize-base.css&3.5.1/build/slider-base/assets/skins/sam/slider-base.css">
+
+
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/yui-base/yui-base-min.js&3.5.1/build/attribute-core/attribute-core-min.js&3.5.1/build/base-core/base-core-min.js&3.5.1/build/oop/oop-min.js&3.5.1/build/event-custom-base/event-custom-base-min.js&3.5.1/build/event-custom-complex/event-custom-complex-min.js&3.5.1/build/attribute-events/attribute-events-min.js&3.5.1/build/attribute-extras/attribute-extras-min.js&3.5.1/build/attribute-base/attribute-base-min.js&3.5.1/build/attribute-complex/attribute-complex-min.js&3.5.1/build/base-base/base-base-min.js&3.5.1/build/pluginhost-base/pluginhost-base-min.js&3.5.1/build/pluginhost-config/pluginhost-config-min.js&3.5.1/build/base-pluginhost/base-pluginhost-min.js&3.5.1/build/base-build/base-build-min.js&3.5.1/build/datasource-local/datasource-local-min.js&3.5.1/build/querystring-stringify-simple/querystring-stringify-simple-min.js&3.5.1/build/io-base/io-base-min.js&3.5.1/build/datasource-io/datasource-io-min.js&3.5.1/build/get/get-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/datasource-get/datasource-get-min.js&3.5.1/build/datasource-function/datasource-function-min.js&3.5.1/build/plugin/plugin-min.js&3.5.1/build/cache-base/cache-base-min.js&3.5.1/build/datasource-cache/datasource-cache-min.js&3.5.1/build/json-parse/json-parse-min.js&3.5.1/build/json-stringify/json-stringify-min.js&3.5.1/build/dataschema-base/dataschema-base-min.js&3.5.1/build/dataschema-json/dataschema-json-min.js&3.5.1/build/datasource-jsonschema/datasource-jsonschema-min.js&3.5.1/build/dataschema-xml/dataschema-xml-min.js&3.5.1/build/datasource-xmlschema/datasource-xmlschema-min.js&3.5.1/build/dataschema-array/dataschema-array-min.js&3.5.1/build/datasource-arrayschema/datasource-arrayschema-min.js&3.5.1/build/dataschema-text/dataschema-text-min.js&3.5.1/build/datasource-textschema/datasource-textschema-min.js&3.5.1/build/datasource-polling/datasource-polling-min.js&3.5.1/build/datatype-date-parse/datatype-date-parse-min.js&3.5.1/build/intl-base/intl-base-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/intl/intl-min.js&3.5.1/build/datatype-date-format/lang/datatype-date-format.js&3.5.1/build/datatype-date-format/datatype-date-format-min.js&3.5.1/build/features/features-min.js&3.5.1/build/dom-core/dom-core-min.js&3.5.1/build/dom-base/dom-base-min.js&3.5.1/build/selector-native/selector-native-min.js&3.5.1/build/selector/selector-min.js&3.5.1/build/node-core/node-core-min.js&3.5.1/build/node-base/node-base-min.js&3.5.1/build/event-base/event-base-min.js&3.5.1/build/event-delegate/event-delegate-min.js&3.5.1/build/node-event-delegate/node-event-delegate-min.js&3.5.1/build/node-pluginhost/node-pluginhost-min.js&3.5.1/build/dom-style/dom-style-min.js&3.5.1/build/dom-screen/dom-screen-min.js&3.5.1/build/node-screen/node-screen-min.js&3.5.1/build/node-style/node-style-min.js&3.5.1/build/yui-throttle/yui-throttle-min.js&3.5.1/build/classnamemanager/classnamemanager-min.js&3.5.1/build/dd-ddm-base/dd-ddm-base-min.js&3.5.1/build/event-synthetic/event-synthetic-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/event-resize/event-resize-min.js&3.5.1/build/dd-ddm/dd-ddm-min.js&3.5.1/build/dd-ddm-drop/dd-ddm-drop-min.js&3.5.1/build/dd-drag/dd-drag-min.js&3.5.1/build/dd-proxy/dd-proxy-min.js&3.5.1/build/dd-constrain/dd-constrain-min.js&3.5.1/build/dd-drop/dd-drop-min.js&3.5.1/build/dd-scroll/dd-scroll-min.js&3.5.1/build/event-mouseenter/event-mouseenter-min.js&3.5.1/build/dd-drop-plugin/dd-drop-plugin-min.js&3.5.1/build/dd-delegate/dd-delegate-min.js&3.5.1/build/datatype-xml-parse/datatype-xml-parse-min.js&3.5.1/build/datatype-xml-format/datatype-xml-format-min.js&3.5.1/build/selector-css2/selector-css2-min.js&3.5.1/build/selector-css3/selector-css3-min.js&3.5.1/build/dump/dump-min.js&3.5.1/build/substitute/substitute-min.js&3.5.1/build/frame/frame-min.js&3.5.1/build/editor-selection/editor-selection-min.js&3.5.1/build/exec-command/exec-command-min.js&3.5.1/build/editor-base/editor-base-min.js&3.5.1/build/editor-para-base/editor-para-base-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/editor-para/editor-para-min.js&3.5.1/build/editor-br/editor-br-min.js&3.5.1/build/editor-bidi/editor-bidi-min.js&3.5.1/build/editor-tab/editor-tab-min.js&3.5.1/build/createlink-base/createlink-base-min.js&3.5.1/build/event-mousewheel/event-mousewheel-min.js&3.5.1/build/event-key/event-key-min.js&3.5.1/build/event-focus/event-focus-min.js&3.5.1/build/event-hover/event-hover-min.js&3.5.1/build/event-outside/event-outside-min.js&3.5.1/build/event-touch/event-touch-min.js&3.5.1/build/event-move/event-move-min.js&3.5.1/build/event-flick/event-flick-min.js&3.5.1/build/event-valuechange/event-valuechange-min.js&3.5.1/build/io-xdr/io-xdr-min.js&3.5.1/build/io-form/io-form-min.js&3.5.1/build/io-upload-iframe/io-upload-iframe-min.js&3.5.1/build/queue-promote/queue-promote-min.js&3.5.1/build/io-queue/io-queue-min.js&3.5.1/build/loader-base/loader-base-min.js&3.5.1/build/loader-rollup/loader-rollup-min.js&3.5.1/build/loader-yui3/loader-yui3-min.js"></script>
+<script type="text/javascript" src="http://yui.yahooapis.com/combo?3.5.1/build/array-extras/array-extras-min.js&3.5.1/build/querystring-parse/querystring-parse-min.js&3.5.1/build/querystring-stringify/querystring-stringify-min.js&3.5.1/build/widget-base/widget-base-min.js&3.5.1/build/widget-htmlparser/widget-htmlparser-min.js&3.5.1/build/widget-skin/widget-skin-min.js&3.5.1/build/widget-uievents/widget-uievents-min.js&3.5.1/build/resize-base/resize-base-min.js&3.5.1/build/resize-proxy/resize-proxy-min.js&3.5.1/build/resize-constrain/resize-constrain-min.js&3.5.1/build/slider-base/slider-base-min.js&3.5.1/build/slider-value-range/slider-value-range-min.js&3.5.1/build/clickable-rail/clickable-rail-min.js&3.5.1/build/range-slider/range-slider-min.js&3.5.1/build/text-data-accentfold/text-data-accentfold-min.js&3.5.1/build/text-accentfold/text-accentfold-min.js&3.5.1/build/text-data-wordbreak/text-data-wordbreak-min.js&3.5.1/build/text-wordbreak/text-wordbreak-min.js"></script>
+-->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css">
+<script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssgrids/grids-min.css">
+
+<link rel="stylesheet" type="text/css" href="daysch.css" />
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>          
+<script type="text/javascript">
+var scheduleStructure={"data":[]};
+var scheduleName="";
+function newTime(parnt,name){
+	if(name==''){
+		name='Enter Time';
+		}
+	var template='\
+		<div class="timecol">\
+			<div class="timename"><h2>'+name+'</h2></div>\
+			<div class="emnum">EMs: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option><option value="5">5</option></select></div>\
+			<div class="lecnum">Lectors: <select><option value="0">0</option><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>\
+			<div class="spacer"></div>\
+		</div>';
+	var newT=$(template);
+	newT.insertBefore(parnt.find(".timecol").last());
+	var daynum=parnt.data("index");
+	newT.data("index",scheduleStructure["data"][daynum]["times"].length);
+	scheduleStructure["data"][daynum]["times"].push(name);
+	}
+function newDate(name){
+	if(name==''){
+		name="Enter Date";
+		}
+	var template='\
+		<div class="day">\
+			<div class="dayname"><h1>'+name+'</h1></div>\
+			<div class="times">\
+				<div class="timecol">\
+					<div class="timename newtime"><h2>Add New Time</h2></div>\
+				</div>\
+				<div class="spacer"></div>\
+			</div>\
+		</div>'
+	var newD=$(template);
+	newD.find(".timename").bind("click",
+		{par:newD},
+		function(eventO){
+			var parnt=eventO.data["par"];
+			addNewTime(parnt);
+			}
+			);
+	newD.insertBefore($("#newday"));
+	newD.data("index",scheduleStructure["data"].length);
+	scheduleStructure["data"].push({"day":name,"times":[]});
+	}
+var newtimeh1;
+function addNewTime(parnt){
+	var namebox=$("<input type='text' />")
+	var thisbox=parnt.find(".newtime");
+	thisbox.append(namebox);
+	newtimeh1=thisbox.find("h2").detach()
+	namebox.focus();
+	namebox.bind('blur',
+		{},
+		function(eventObject){
+			newTime(parnt,namebox.val());
+			newtimeh1.insertBefore(namebox);
+			namebox.remove();});
+	namebox.bind('keypress',
+		{},
+		function(eventObject){
+			if(eventObject.which==13){
+			eventObject.preventDefault();
+			newTime(parnt,namebox.val());
+			newtimeh1.insertBefore(namebox);
+			namebox.remove();}
+			});
+}
+var newdayh1;
+function addNewDay(){
+	var namebox=$("<input id='newName' type='text' />")
+	$("#newday .dayname").append(namebox);
+	newdayh1=$("#newday .dayname h1").detach()
+	namebox.focus();
+	namebox.keypress(function(event){if(event.which==13){event.preventDefault();newDate(namebox.val());newdayh1.prependTo($("#newday .dayname"));namebox.remove();}});
+	namebox.blur(function(){newDate(namebox.val());newdayh1.prependTo($("#newday .dayname"));namebox.remove();});
+}
+
+function loadSchedule(data){
+	var struc=data["data"];
+	for(var i=0;i<struc.length;i++){
+		newDate(struc[i]["day"]);
+		var prnt=$("#newday").prev();
+		if(struc[i]["times"]){
+			for(var j=0;j<struc[i]["times"].length;j++){
+				newTime(prnt,struc[i]["times"][j]);
+				}
+			}
+		}
+	$("#schedlink").show();
+	$("#schedlinka").attr("href",window.location.hostname+window.location.pathname+"?"+scheduleName)
+			.html(window.location.hostname+window.location.pathname+"?"+scheduleName);
+	}
+
+function saveSchedule(){
+	$.post("/savesched/"+scheduleName,scheduleStructure);
+	$("#schedlink").show();
+	$("#schedlinka").attr("href",window.location.hostname+window.location.pathname+"?"+scheduleName)
+			.html(window.location.hostname+window.location.pathname+"?"+scheduleName);
+	}
+
+
+$(document).ready(function(){
+	$("#schedlink").hide();
+	$.getJSON("/schedlist",function(res){
+			for(var fil=0;fil<res["names"].length;fil++){
+				var thisfile=$("<div class=\"existsched\">"+res["names"][fil]+"</div>");
+				$("#loadsched").append(thisfile);
+				}
+			});
+	var t=window.location.href;
+	if(t.indexOf("?")==-1){
+		$.getJSON("/getuniqid",function(res){
+			scheduleName=res["name"];
+			});
+		}
+	else{
+		scheduleName=t.substring(t.indexOf("?")+1);
+		$.getJSON("./loadsched/"+scheduleName,loadSchedule);
+		}
+		
+	$("#loadsched").delegate(".existsched","click",function(e){
+		var fil=$(this);
+		scheduleName=fil.text();
+		$.getJSON("./loadsched/"+fil.text(),loadSchedule);
+		});
+	});
+</script>
+
+
+</head>
+
+<body>
+<div id="schedlink">Modify this schedule at <a href="" id="schedlinka"></a></div>
+<div id="days">
+<!--<div id="day1" class="day">
+	<div class="dayname"><h1>May 31</h1></div>
+	<div class="times">
+		<div class="timecol">
+			<div class="timename"><h2>9:30am</h2></div>
+			<div class="emnum">EMs: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="lecnum">Lectors: <select><option value="0">0</option><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="spacer"></div>
+		</div>
+		<div class="timecol">
+			<div class="timename"><h2>11am</h2></div>
+			<div class="emnum">EMs: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="lecnum">Lectors: <select><option value="0">0</option><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="spacer"></div>
+		</div>
+		<div class="timecol">
+			<div class="timename"><h2>5pm</h2></div>
+			<div class="emnum">EMs: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="lecnum">Lectors: <select><option value="0">0</option><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>
+			<div class="spacer"></div>
+		</div>
+		<div class="timecol">
+			<div class="timename"><h2>Add New Time</h2></div>
+		</div>
+	</div>
+</div>-->
+<div id="newday" class="day">
+	<div class="dayname" onclick="addNewDay()"><h1>Add New Day</h1></div>
+</div>
+<div id="right">
+<div id="savesched" onclick="saveSchedule()">Save Schedule</div>
+<div id="loadsched"></div>
+</div>
+<div class="spacer"></div>
+</div>
+</body>
+</html>

@@ -14,7 +14,7 @@ var loadsched=function(req,res){
 	fs.readFile("./data/"+req.params.id,function(err,data){
 		res.writeHeader(200,"Content-Type: application/json");
 		if(err){
-			res.write(JSON.stringify({"data":{}));
+			res.write(JSON.stringify({"data":{}}));
 			}
 		else{
 			res.write(data);

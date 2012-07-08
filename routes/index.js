@@ -22,8 +22,21 @@ var loadsched=function(req,res){
 		res.end();
 		});
 	};
+var loadresponses=function(req,res){
+	fs.readFile("./schedule/"+req.params.id,function(err,data){
+		res.writeHeader(200,"Content-Type: application/json");
+		if(err){
+			res.write(JSON.stringify({"respondents":[]}));
+			}
+		else{
+			res.write(data);
+			}
+		res.end();
+		});
+	};
 var writesched=function(req,res){
 	fs.writeFile("./data/"+req.params.id,JSON.stringify(req.body));
+	res.end();
 };
 var loadables=function(req,res){
 	fs.readdir("./data/",function(err,data){
@@ -52,8 +65,25 @@ var newsch=function(req,res){
 		res.end();
 		});
 	}
+var saveresponse=function(req,res){
+	fs.readFile("./schedule/"+req.params.id,function(err,data){
+		var t;
+		if(!err){t=JSON.parse(data);}
+		else{t={'respondents':[],'avails':[]};}
+		t['respondents'].push(req.body["respondents"]);
+		t['avails'].push(req.body['avail']);
+		fs.writeFile("./schedule/"+req.params.id,JSON.stringify(t));
+		res.end();
+		//disgusting and nonatomic :-/
+		});
+
+	};
 	
+var schedule=require("./showsched");
+exports.schedule=schedule.schedule;
 exports.newsch=newsch;
 exports.savesched=writesched;
 exports.loadsched=loadsched;	
+exports.loadresponses=loadresponses;
+exports.saveresponse=saveresponse;
 exports.loadables=loadables;

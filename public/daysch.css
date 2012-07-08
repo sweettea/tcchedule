@@ -1,5 +1,13 @@
-
-.emnum{
+.em{
+	float:left;
+	width:50%;
+	border-width:1px;
+}
+.lec{
+	float:left;
+	width:50%;
+	border-width:1px;
+}.emnum{
 	float:left;
 	width:50%;
 	border-width:1px;
@@ -8,6 +16,13 @@
 	float:left;
 	width:50%;
 	border-width:1px;
+}
+.namecol{
+	float:left;
+	width:150px;
+}
+#personname{
+	width:100%;
 }
 .timecol{
 	float:left;
@@ -18,7 +33,11 @@
 	text-align:center;
 	width:100%;
 }
-
+#iama{
+	text-align:center;
+	width: 500px;
+	margin: auto;
+}
 .day:nth-child(odd) .dayname{
 	border-bottom: 2px solid #888;
 }
@@ -31,6 +50,23 @@
 }
 .day{
 	float:left;
+	padding-left:5px;
+}
+.savecol{
+	float:right;
+	width:150pt;
+	margin-right:auto;
+	padding-right:5px;
+}
+.anstrue{
+	background-color: #5f5;
+}
+.ansfalse{
+	background-color: #f55;
+}
+.namecol{
+	float:left;
+	padding-left:5px;
 }
 .times{
 	width:100%;
@@ -50,7 +86,6 @@
 	width:100%;
 }
 #schedlink{
-	visible:hidden;
 }
 #newday{
 	padding-left: 20px;

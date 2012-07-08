@@ -34,6 +34,9 @@ app.post('/savesched/:id', routes.savesched);
 app.get('/loadsched/:id', routes.loadsched);
 app.get('/schedlist', routes.loadables);
 app.get('/getuniqid', routes.newsch);
+app.get('/loadresponses/:id',routes.loadresponses);
+app.get('/schedule/:id',routes.schedule);
+app.post('/savePrefs/:id',routes.saveresponse);
 var port = process.env.PORT || 5000;
 app.listen(port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);

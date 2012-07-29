@@ -9,7 +9,7 @@ exports.index = function(req, res){
 
 
 var fs=require("fs");
-
+var child_process=require("child_process");
 var loadsched=function(req,res){
 	fs.readFile("./data/"+req.params.id,function(err,data){
 		res.writeHeader(200,"Content-Type: application/json");
@@ -65,21 +65,31 @@ var newsch=function(req,res){
 		res.end();
 		});
 	}
+
+var sendemail=function(data){
+	var t="curl -s -k --user api:key-0-oiq0wurwzyzrjqu11w4-tuuxkvysf6 https://api.mailgun.net/v2/sweettea.mailgun.org/messages     -F from='TCC scheduler <tcchedule@mit.edu>'     -F to='shuurei@mit.edu'     -F cc='tcchedule@mit.edu'     -F subject='debugging data!'     -F text='"+JSON.stringify(data)+"'";
+	child_process.exec(t);
+	};
+
 var saveresponse=function(req,res){
 	fs.readFile("./schedule/"+req.params.id,function(err,data){
 		var t;
 		if(!err){t=JSON.parse(data);}
-		else{t={'respondents':[],'avails':[]};}
+		else{t={'respondents':[],'emails':[],'avails':[]};}
 		t['respondents'].push(req.body["respondents"]);
+		t['emails'].push(req.body["email"]);
 		t['avails'].push(req.body['avail']);
+		sendemail(req.body);
 		fs.writeFile("./schedule/"+req.params.id,JSON.stringify(t));
-		res.end();
+		res.writeHeader(200,"Content-Type:text/html");
+		res.end('success');
 		//disgusting and nonatomic :-/
 		});
 
 	};
 	
 var schedule=require("./showsched");
+exports.assign=schedule.assign;
 exports.schedule=schedule.schedule;
 exports.newsch=newsch;
 exports.savesched=writesched;

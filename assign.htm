@@ -1,61 +1,45 @@
 <html>
 <head>
 <title>
-Make New Schedule
+TCC Scheduling
 </title>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css">
 <script src="http://yui.yahooapis.com/3.5.1/build/yui/yui-min.js"></script>
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssgrids/grids-min.css">
 
-<link rel="stylesheet" type="text/css" href="daysch.css" />
+<link rel="stylesheet" type="text/css" href="../daysch.css" />
  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>          
 <script type="text/javascript">
-var scheduleStructure={"data":[],"nums":[]};
+var scheduleStructure={"data":[]};
 var scheduleName="";
 function newTime(parnt,name){
-	if(name==''){
-		name='Enter Time';
-		}
 	var template='\
 		<div class="timecol">\
 			<div class="timename"><h2>'+name+'</h2></div>\
-			<div class="emnum">EMs: <select><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3" selected="selected">3</option><option value="4">4</option><option value="5">5</option></select></div>\
-			<div class="lecnum">Lectors: <select><option value="0">0</option><option value="1">1</option><option value="2" selected="selected">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div>\
+			<div class="em">EMs<span class="emavail"></span></div>\
+			<div class="lector">Lectors<span class="lecavail"></span></div>\
 			<div class="spacer"></div>\
 		</div>';
 	var newT=$(template);
-	newT.insertBefore(parnt.find(".timecol").last());
+	newT.insertBefore(parnt.find(".times").children().last());
 	var daynum=parnt.data("index");
 	newT.data("index",scheduleStructure["data"][daynum]["times"].length);
 	scheduleStructure["data"][daynum]["times"].push(name);
 	}
 function newDate(name){
-	if(name==''){
-		name="Enter Date";
-		}
 	var template='\
 		<div class="day">\
 			<div class="dayname"><h1>'+name+'</h1></div>\
 			<div class="times">\
-				<div class="timecol">\
-					<div class="timename newtime"><h2>Add New Time</h2></div>\
-				</div>\
 				<div class="spacer"></div>\
 			</div>\
 		</div>'
 	var newD=$(template);
-	newD.find(".timename").bind("click",
-		{par:newD},
-		function(eventO){
-			var parnt=eventO.data["par"];
-			addNewTime(parnt);
-			}
-			);
-	newD.insertBefore($("#newday"));
+	newD.insertBefore($("#days").children().last());
 	newD.data("index",scheduleStructure["data"].length);
 	scheduleStructure["data"].push({"day":name,"times":[]});
 	}
-var newtimeh1;
+/*var newtimeh1;
 function addNewTime(parnt){
 	var namebox=$("<input type='text' />")
 	var thisbox=parnt.find(".newtime");
@@ -87,70 +71,56 @@ function addNewDay(){
 	namebox.keypress(function(event){if(event.which==13){event.preventDefault();newDate(namebox.val());newdayh1.prependTo($("#newday .dayname"));namebox.remove();}});
 	namebox.blur(function(){newDate(namebox.val());newdayh1.prependTo($("#newday .dayname"));namebox.remove();});
 }
-
+*/
+var targeteachheight=30;
 function loadSchedule(data){
 	var struc=data["data"];
 	for(var i=0;i<struc.length;i++){
 		newDate(struc[i]["day"]);
-		var prnt=$("#newday").prev();
+		var prnt=$(".day").last();
 		if(struc[i]["times"]){
 			for(var j=0;j<struc[i]["times"].length;j++){
 				newTime(prnt,struc[i]["times"][j]);
 				}
 			}
 		}
-	$("select").each(function(idx,el){
-		$(el).val(data["nums"][idx].toString());
-		scheduleStructure["nums"].push(data["nums"][idx]);
-		});
-	$("#schedlink").show();
-	$("#schedlinka").attr("href","http://"+window.location.hostname+window.location.pathname+"?"+scheduleName)
-			.html(window.location.hostname+window.location.pathname+"?"+scheduleName);
-	$("#schedlinkb").attr("href","http://"+window.location.hostname+"/schedule"+"/"+scheduleName+"?em")
-			.html(window.location.hostname+"/schedule/"+scheduleName+"?em");
-	$("#schedlinkc").attr("href","http://"+window.location.hostname+"/schedule"+"/"+scheduleName+"?lector")
-			.html(window.location.hostname+"/schedule/"+scheduleName+"?lector");
-	}
-
-function saveSchedule(){
-	$("select").each(function(idx,el){
-		scheduleStructure["nums"].push($(el).val());
-		});
-	$.post("/savesched/"+scheduleName,scheduleStructure);
-	$("#schedlink").show();
-	$("#schedlinka").attr("href","http://"+window.location.hostname+window.location.pathname+"?"+scheduleName)
-			.html(window.location.hostname+window.location.pathname+"?"+scheduleName);
-	$("#schedlinkb").attr("href","http://"+window.location.hostname+"/schedule"+"/"+scheduleName+"?em")
-			.html(window.location.hostname+"/schedule/"+scheduleName+"?em");
-	$("#schedlinkc").attr("href","http://"+window.location.hostname+"/schedule"+"/"+scheduleName+"?lector")
-			.html(window.location.hostname+"/schedule/"+scheduleName+"?lector");
-	}
-
-
-$(document).ready(function(){
-	$("#schedlink").hide();
-	$.getJSON("/schedlist",function(res){
-			for(var fil=0;fil<res["names"].length;fil++){
-				var thisfile=$("<div class=\"existsched\">"+res["names"][fil]+"</div>");
-				$("#loadsched").append(thisfile);
+	for(var i=0;i<data["nums"].length/2;i++){
+		var emtar=$('<div class="empool"><div class="droptarget notfull">Drop EMs here</div></div>');
+		emtar.height(targeteachheight*data["nums"][i*2]);
+		$(".em").eq(i).append(emtar);
+		var letar=$('<div class="lecpool"><div class="droptarget notfull">Drop lectors here</div></div>');
+		letar.height(targeteachheight*data["nums"][i*2+1]);
+		$(".lector").eq(i).append(letar);
+		}
+	$.getJSON("../loadresponses/"+scheduleName,loadResponses);
+	var desheight=$(".dayname").first().height()+$(".timename").first().height()+$(".em").first().height(); 
+	$(".filler").height(desheight);}
+function loadResponses(data){
+//	alert(JSON.stringify(data));
+	var emslots=$(".empool");
+	var leslots=$(".lecpool");
+	for(var i=0;i<emslots.length;i++){
+	}	
+	for(var i=0;i<data["respondents"].length;i++){
+		for(var j=0;j<emslots.length;j++){
+			if(data['avails'][i][j*2]=='true'){
+				emslots.eq(j).append($("<div class='droppable'>"+data["respondents"][i]+"</div>"));
 				}
-			});
-	var t=window.location.href;
-	if(t.indexOf("?")==-1){
-		$.getJSON("/getuniqid",function(res){
-			scheduleName=res["name"];
-			});
+			if(data['avails'][i][j*2+1]=='true'){
+				leslots.eq(j).append($("<div class='droppable'>"+data["respondents"][i]+"</div>"));
+				}
+			}
+		}
+	}
+		
+$(document).ready(function(){
+	if(window.location.pathname.length<=7){
+		$("#days").html("<h1>Invalid schedule! Perhaps this schedule was deleted.</h1>");
 		}
 	else{
-		scheduleName=t.substring(t.indexOf("?")+1);
-		$.getJSON("./loadsched/"+scheduleName,loadSchedule);
+		scheduleName=window.location.pathname.substring(8);
+		$.getJSON("../loadsched/"+scheduleName,loadSchedule);
 		}
-		
-	$("#loadsched").delegate(".existsched","click",function(e){
-		var fil=$(this);
-		scheduleName=fil.text();
-		$.getJSON("./loadsched/"+fil.text(),loadSchedule);
-		});
 	});
 </script>
 
@@ -158,8 +128,10 @@ $(document).ready(function(){
 </head>
 
 <body>
-<div id="schedlink">Modify this schedule at <a href="" id="schedlinka"></a>.<br>Get EM responses at <a href="" id="schedlinkb"></a>, <br>lector responses at <a href="" id="schedlinkc"></a>.</div>
 <div id="days">
+<div id="notactuallyaday" class="namecol">
+<div class="filler"> </div>
+<span id="personname"></span></div>
 <!--<div id="day1" class="day">
 	<div class="dayname"><h1>May 31</h1></div>
 	<div class="times">
@@ -186,13 +158,6 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>-->
-<div id="newday" class="day">
-	<div class="dayname" onclick="addNewDay()"><h1>Add New Day</h1></div>
-</div>
-<div id="right">
-<div id="savesched" onclick="saveSchedule()">Save Schedule</div>
-<div id="loadsched"></div>
-</div>
 <div class="spacer"></div>
 </div>
 </body>

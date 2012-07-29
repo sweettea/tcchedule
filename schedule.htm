@@ -89,7 +89,7 @@ function loadSchedule(data){
 function loadResponses(data){
 	//alert(JSON.stringify(data));
 	for(var i=0;i<data["respondents"].length;i++){
-		$("#personname").after($("<div class='resname'>"+data["respondents"][i]+"</div>"));
+		$("#personemail").after($("<div class='resname'>"+data["respondents"][i]+"</div>"));
 		var emslots=$(".emavail");
 		var leslots=$(".lecavail");
 		for(var j=0;j<emslots.length;j++){
@@ -109,14 +109,21 @@ function loadResponses(data){
 	}
 function saveprefs(){
 	//ugh, so hackish.
-	var data={'respondents':$("#personname").val(),'avail':[]};
+	var data={'respondents':$("#personname").val(),'email':$("#personemail").val(),'avail':[]};
 	var ems=$(".emavail");
 	var lecs=$(".lecavail")
 	for(var i=0;i<$(".timecol").length;i++){
 		data['avail'].push(ems.eq(i).is(":checked"));
 		data['avail'].push(lecs.eq(i).is(":checked"));
 		}
-	$.post("../savePrefs/"+window.location.pathname.substring(10),data);
+	$.post("../savePrefs/"+window.location.pathname.substring(10),data,function(res){
+		if(res=="success"){
+			$("#notactuallyadayt").text("Saved");
+			}
+		else{
+			$("#notactuallyadayt").text("Not saved");
+			}
+		},"text");
 	}
 
 		
@@ -165,7 +172,7 @@ function updateEMLectorPrefs(){
 <div id="days">
 <div id="notactuallyaday" class="namecol">
 <div class="filler"> </div>
-<input type="text" id="personname" value="Your Name" onfocus='if($("#personname").val()=="Your Name"){$("#personname").val("");}' /></div>
+<input type="text" id="personname" value="Your Name" onfocus='if($("#personname").val()=="Your Name"){$("#personname").val("");}' size="14" /><input type="text" id="personemail" value="email@mit.edu" onfocus='if($("#personemail").val()=="email@mit.edu"){$("#personemail").val("");}' size="14" /> </div>
 <!--<div id="day1" class="day">
 	<div class="dayname"><h1>May 31</h1></div>
 	<div class="times">
@@ -192,7 +199,7 @@ function updateEMLectorPrefs(){
 		</div>
 	</div>
 </div>-->
-<div id="notactuallyaday" class="savecol" onclick="saveprefs()">
+<div id="notactuallyadayt" class="savecol" onclick="saveprefs()">
 <div class="filler"> </div>
 Save My Availability
 </div>

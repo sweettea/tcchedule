@@ -36,6 +36,7 @@ app.get('/schedlist', routes.loadables);
 app.get('/getuniqid', routes.newsch);
 app.get('/loadresponses/:id',routes.loadresponses);
 app.get('/schedule/:id',routes.schedule);
+app.get('/assign/:id',routes.assign);
 app.post('/savePrefs/:id',routes.saveresponse);
 var port = process.env.PORT || 5000;
 app.listen(port, function(){

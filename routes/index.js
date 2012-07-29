@@ -7,13 +7,18 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' })
 };
 
+var redis = require('redis-url').connect(process.env.REDISTOGO_URL);
+
+//redis.get('foo', function(err, value) {
+//  console.log('foo is: ' + value);
+//});
 
 var fs=require("fs");
 var child_process=require("child_process");
 var loadsched=function(req,res){
-	fs.readFile("./data/"+req.params.id,function(err,data){
+	redis.get(":data:"+req.params.id,function(err,data){
 		res.writeHeader(200,"Content-Type: application/json");
-		if(err){
+		if(err || data==null || data==undefined){
 			res.write(JSON.stringify({"data":{}}));
 			}
 		else{
@@ -23,9 +28,9 @@ var loadsched=function(req,res){
 		});
 	};
 var loadresponses=function(req,res){
-	fs.readFile("./schedule/"+req.params.id,function(err,data){
+	redis.get(":schedule:"+req.params.id,function(err,data){
 		res.writeHeader(200,"Content-Type: application/json");
-		if(err){
+		if(err || data==null || data==undefined){
 			res.write(JSON.stringify({"respondents":[]}));
 			}
 		else{
@@ -35,17 +40,26 @@ var loadresponses=function(req,res){
 		});
 	};
 var writesched=function(req,res){
-	fs.writeFile("./data/"+req.params.id,JSON.stringify(req.body));
+	redis.set(":data:"+req.params.id,JSON.stringify(req.body));
+	redis.get(":lsdata",function(err,data){
+		if(err || data==null || data==undefined){redis.set(":lsdata",JSON.stringify({'files':[req.params.id]}));}
+		else{
+			var p=JSON.parse(data);
+			p['files'].push(req.params.id);
+			redis.set(":lsdata",JSON.stringify(p));
+			}
+		});
 	res.end();
 };
 var loadables=function(req,res){
-	fs.readdir("./data/",function(err,data){
+	redis.get(":lsdata",function(err,data){
 		res.writeHeader(200,"Content-Type: application/json");
-		if(err){
-			res.write("{}");
+		if(err || data==null || data==undefined){
+			res.write("{'names':''}");
 			}
 		else{
-			var obj={"names":data};
+			var d=JSON.parse(data);
+			var obj={"names":d['files']};
 			res.write(JSON.stringify(obj));
 			}
 		res.end();});
@@ -56,9 +70,12 @@ var crypto = require('crypto');
 
 var newsch=function(req,res){
 	var md5sum=crypto.createHash("md5");
-	fs.readdir("./data",function(err,files){
-		for(var i=0;i<files.length;i++){
-			md5sum.update(files[i]);
+	redis.get(":lsdata",function(err,files){
+		if(!err || data==null || data==undefined){
+			var f=JSON.parse(files);
+			for(var i=0;i<f['files'].length;i++){
+				md5sum.update(f['files'][i]);
+				}
 			}
 		res.writeHeader(200,"Content-Type: application/json");
 		res.write(JSON.stringify({"name":md5sum.digest("hex")}));
@@ -72,15 +89,18 @@ var sendemail=function(data){
 	};
 
 var saveresponse=function(req,res){
-	fs.readFile("./schedule/"+req.params.id,function(err,data){
+	redis.get(":schedule:"+req.params.id,function(err,data){
 		var t;
-		if(!err){t=JSON.parse(data);}
-		else{t={'respondents':[],'emails':[],'avails':[]};}
+		if(err || data==null || data==undefined){
+			t={'respondents':[],'emails':[],'avails':[]};}
+		else{
+			t=JSON.parse(data);
+			}
 		t['respondents'].push(req.body["respondents"]);
 		t['emails'].push(req.body["email"]);
 		t['avails'].push(req.body['avail']);
 		sendemail(req.body);
-		fs.writeFile("./schedule/"+req.params.id,JSON.stringify(t));
+		redis.set(":schedule:"+req.params.id,JSON.stringify(t));
 		res.writeHeader(200,"Content-Type:text/html");
 		res.end('success');
 		//disgusting and nonatomic :-/

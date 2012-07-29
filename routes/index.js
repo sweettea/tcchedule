@@ -71,7 +71,9 @@ var crypto = require('crypto');
 var newsch=function(req,res){
 	var md5sum=crypto.createHash("md5");
 	redis.get(":lsdata",function(err,files){
-		if(!err || data==null || data==undefined){
+		if(err || data==null || data==undefined){
+			}
+		else{
 			var f=JSON.parse(files);
 			for(var i=0;i<f['files'].length;i++){
 				md5sum.update(f['files'][i]);

@@ -3,7 +3,7 @@
 	width:50%;
 	border-width:1px;
 }
-.lec{
+.lector{
 	float:left;
 	width:50%;
 	border-width:1px;
@@ -70,6 +70,19 @@
 	float:left;
 	padding-left:5px;
 }
+.availperson:nth-child(odd){
+	background-color:#9DF;
+	}
+.availperson:nth-child(even){
+	background-color:#DF9;
+	}
+.pselected{
+	background-color:#F9D !important;
+	}
+.availperson{
+/*	display:inline-block;*/
+	width:100%;
+	}
 .times{
 	width:100%;
 }

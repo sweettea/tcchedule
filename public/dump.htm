@@ -12,12 +12,12 @@ TCC Scheduling
 <script type="text/javascript">
 var scheduleStructure={"data":[]};
 var scheduleName="";
-function newTime(parnt,name){
+function newTime(parnt,name,ems,lecs){
 	var template='\
 		<div class="timecol">\
 			<div class="timename"><h2>'+name+'</h2></div>\
-			<div class="em">EMs<span class="emavail"></span></div>\
-			<div class="lector">Lectors<span class="lecavail"></span></div>\
+			<div class="em"> EMs<span class="emavail"></span></div>\
+			<div class="lector"> Lectors<span class="lecavail"></span></div>\
 			<div class="spacer"></div>\
 		</div>';
 	var newT=$(template);
@@ -39,7 +39,6 @@ function newDate(name){
 	newD.data("index",scheduleStructure["data"].length);
 	scheduleStructure["data"].push({"day":name,"times":[]});
 	}
-var targeteachheight=30;
 function loadSchedule(data){
 	var struc=data["data"];
 	for(var i=0;i<struc.length;i++){
@@ -51,110 +50,72 @@ function loadSchedule(data){
 				}
 			}
 		}
-	for(var i=0;i<data["nums"].length/2;i++){
-		var emtar=$('<div class="empool"><div>Need <span class="emnumb">'+data["nums"][i*2]+'</span></div>');
-		$(".em").eq(i).append(emtar);
-		var letar=$('<div class="lecpool"><div>Need <span class="lecnumb">'+data["nums"][i*2+1]+'</span></div>');
-		$(".lector").eq(i).append(letar);
-		}
 	$.getJSON("../loadresponses/"+scheduleName,loadResponses);
-	var desheight=$(".dayname").first().height()+$(".timename").first().height()+$(".em").first().height(); 
+	//var desheight=$(".dayname").first().height()+$(".timename").first().height(); 
+	desheight=$(".emavail").position().top;
 	$(".filler").height(desheight);}
 function loadResponses(data){
-//	alert(JSON.stringify(data));
-	var emslots=$(".empool");
-	var leslots=$(".lecpool");
-	for(var i=0;i<emslots.length;i++){
-	}	
+	//alert(JSON.stringify(data));
 	for(var i=0;i<data["respondents"].length;i++){
+		$("#personemail").after($("<div class='resname'>"+data["respondents"][i]+"</div>"));
+		var emslots=$(".emavail");
+		var leslots=$(".lecavail");
 		for(var j=0;j<emslots.length;j++){
+			var tf="ansfalse";
 			if(data['avails'][i][j*2]=='true'){
-				emslots.eq(j).append($("<div class='availperson'>"+data["respondents"][i]+"</div>").data("clicked",false));
+				tf="anstrue";
 				}
+			emslots.eq(j).after($("<div class='resem "+tf+"'>"+data['avails'][i][j*2]+"</div>"));
+			tf="ansfalse";
 			if(data['avails'][i][j*2+1]=='true'){
-				leslots.eq(j).append($("<div class='availperson'>"+data["respondents"][i]+"</div>").data("clicked",false));
+				tf="anstrue";
 				}
+			leslots.eq(j).after($("<div class='resem "+tf+"'>"+data['avails'][i][j*2+1]+"</div>"));
 			}
 		}
-	$(".lecpool").delegate(".availperson","click",function(e){
-		var fil=$(this);
-		var currlecnum=fil.parents(".lecpool").find(".lecnumb");
-		if(fil.data("clicked")){
-			currlecnum.html(parseInt(currlecnum.html())+1);
-			fil.removeClass("pselected");
-			fil.data("clicked",false);
-			}
-		else{
-			currlecnum.html(parseInt(currlecnum.html())-1);
-			fil.data("clicked",true);
-			fil.addClass("pselected");
-			}	
-		});
-	$(".empool").delegate(".availperson","click",function(e){
-		var fil=$(this);
-		var currEMnum=fil.parents(".empool").find(".emnumb");
-		if(fil.data("clicked")){
-			currEMnum.html(parseInt(currEMnum.html())+1);
-			fil.removeClass("pselected");
-			fil.data("clicked",false);
-			}
-		else{
-			currEMnum.html(parseInt(currEMnum.html())-1);
-			fil.data("clicked",true);
-			fil.addClass("pselected");
-			}	
-		});
-	
+	updateEMLectorPrefs();
 	}
+function saveprefs(){
+	//ugh, so hackish.
+	var data={'respondents':$("#personname").val(),'email':$("#personemail").val(),'avail':[]};
+	var ems=$(".emavail");
+	var lecs=$(".lecavail")
+	for(var i=0;i<$(".timecol").length;i++){
+		data['avail'].push(ems.eq(i).is(":checked"));
+		data['avail'].push(lecs.eq(i).is(":checked"));
+		}
+	$.post("../savePrefs/"+window.location.pathname.substring(10),data,function(res){
+		if(res=="success"){
+			$("#notactuallyadayt").text("Saved");
+			}
+		else{
+			$("#notactuallyadayt").text("Not saved");
+			}
+		},"text");
+	}
+
+		
 $(document).ready(function(){
-	if(window.location.pathname.length<=7){
-		$("#days").html("<h1>Invalid schedule! Perhaps this schedule was deleted.</h1>");
-		}
-	else{
-		scheduleName=window.location.pathname.substring(8);
-		$.getJSON("../loadsched/"+scheduleName,loadSchedule);
-		}
+	var t=window.location.href;
+	scheduleName=t.substring(t.indexOf("?")+1);
+	$.getJSON("./loadsched/"+scheduleName,loadSchedule);
 	});
 
-function genSched(){
-	var selection={"EMs":{},"Lectors":{}};
-	$(".availperson").each(function(idx){
-		if($(this).data('clicked')){
-			//is chosen for this timeslot
-			var thisis=$(this).html();
-			var isEM;
-			if($(this).parents(".em").length!=0){
-				isEM="EMs";
-				}
-			else{
-				isEM="Lectors";
-				}
-			var thisTime=$(this).parents(".timecol").find("h2").html();
-			var thisDate=$(this).parents(".day").find("h1").html();
-			if(!(selection[isEM].hasOwnProperty(thisDate))){
-				selection[isEM][thisDate]={};
-				}
-			if(!(selection[isEM][thisDate].hasOwnProperty(thisTime))){
-				selection[isEM][thisDate][thisTime]=[];
-				}
-			selection[isEM][thisDate][thisTime].push(thisis);
-			}
-		});
-	//alert(JSON.stringify(selection));
-	$.post("../genSched",selection);
-}
-
+function updateEMLectorPrefs(){
+		$(".lector").show();
+		$(".em").show();
+	}
+		
 </script>
 
 
 </head>
 
 <body>
-<div id="announces" onClick="genSched()">Generate Printable Schedule</div>
 <div id="days">
 <div id="notactuallyaday" class="namecol">
 <div class="filler"> </div>
-<span id="personname"></span></div>
+<span id="personname"> </span><span id="personemail"></span> </div>
 <!--<div id="day1" class="day">
 	<div class="dayname"><h1>May 31</h1></div>
 	<div class="times">
@@ -181,6 +142,10 @@ function genSched(){
 		</div>
 	</div>
 </div>-->
+<div id="notactuallyadayt" class="savecol" onclick="saveprefs()">
+<div class="filler"> </div>
+Save My Availability
+</div>
 <div class="spacer"></div>
 </div>
 </body>

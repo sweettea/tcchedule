@@ -38,6 +38,8 @@ app.get('/loadresponses/:id',routes.loadresponses);
 app.get('/schedule/:id',routes.schedule);
 app.get('/assign/:id',routes.assign);
 app.post('/savePrefs/:id',routes.saveresponse);
+app.post('/genSched',routes.genSched);
+app.get('/genSched',routes.getSched);
 var port = process.env.PORT || 5000;
 app.listen(port, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
